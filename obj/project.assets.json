@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/AuPaysDuPereNoel.csproj",
+      "projectUniqueName": "/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel/AuPaysDuPereNoel.csproj",
       "projectName": "AuPaysDuPereNoel",
-      "projectPath": "/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/AuPaysDuPereNoel.csproj",
+      "projectPath": "/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel/AuPaysDuPereNoel.csproj",
       "packagesPath": "/home/rmoham269/.nuget/packages/",
-      "outputPath": "/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/",
+      "outputPath": "/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/rmoham269/.nuget/NuGet/NuGet.Config"
