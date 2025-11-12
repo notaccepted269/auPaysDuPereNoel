@@ -1,0 +1,14 @@
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/bin/Debug/net9.0/AuPaysDuPereNoel
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/bin/Debug/net9.0/AuPaysDuPereNoel.deps.json
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/bin/Debug/net9.0/AuPaysDuPereNoel.runtimeconfig.json
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/bin/Debug/net9.0/AuPaysDuPereNoel.dll
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/bin/Debug/net9.0/AuPaysDuPereNoel.pdb
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/AuPaysDuPereNoel.GeneratedMSBuildEditorConfig.editorconfig
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/AuPaysDuPereNoel.AssemblyInfoInputs.cache
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/AuPaysDuPereNoel.AssemblyInfo.cs
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/AuPaysDuPereNoel.csproj.CoreCompileInputs.cache
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/AuPaysDuPereNoel.dll
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/refint/AuPaysDuPereNoel.dll
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/AuPaysDuPereNoel.pdb
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/AuPaysDuPereNoel.genruntimeconfig.cache
+/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/obj/Debug/net9.0/ref/AuPaysDuPereNoel.dll

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "o3D4DxEFPzg=",
+  "success": true,
+  "projectFilePath": "/home/rmoham269/Documents/Etudes/coursL2_v2/semestre1/projet/AuPaysDuPereNoel_v2/AuPaysDuPereNoel/AuPaysDuPereNoel.csproj",
+  "expectedPackageFiles": [
+    "/home/rmoham269/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
