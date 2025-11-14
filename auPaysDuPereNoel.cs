@@ -481,7 +481,7 @@ namespace AuPaysDuPereNoel
             // 5) Les nains emballent
             foreach (Nain nain in Nains)
             {
-                Lettre? cadeauPret = nain.Travailler();
+                Lettre cadeauPret = nain.Travailler();
                 if (cadeauPret != null)
                 {
                     FilesAttenteContinents[(int)cadeauPret.Continent].Enqueue(cadeauPret);
@@ -502,7 +502,7 @@ namespace AuPaysDuPereNoel
             // 7) Les traîneaux avancent
             foreach (Elfe elfe in Elfes)
             {
-                List<Lettre>? livraisons = elfe.Traineau.AvancerVoyage();
+                List<Lettre> livraisons = elfe.Traineau.AvancerVoyage();
                 if (livraisons != null && livraisons.Count > 0)
                 {
                     Entrepots[(int)elfe.Continent].AjouterLettres(livraisons);
@@ -586,7 +586,7 @@ namespace AuPaysDuPereNoel
                 int heureAvant = HeureActuelle;
                 AvancerUneHeure();
 
-                // Sécurité : si AvancerUneHeure n'incrémente pas l'heure, on sort pour éviter une boucle infinie.
+                // Spour eviter une boucle infini
                 if (HeureActuelle == heureAvant)
                 {
                     break;
@@ -615,7 +615,7 @@ namespace AuPaysDuPereNoel
             int actifs = Lutins.Count(l => l.Statut != StatutEmploye.EnRepos);
             if (nouveauNombre == actifs)
             {
-                Console.WriteLine("ℹ️ Aucun changement nécessaire.");
+                Console.WriteLine(" Aucun changement nécessaire.");
                 return;
             }
 
