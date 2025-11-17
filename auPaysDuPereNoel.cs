@@ -30,6 +30,9 @@ namespace AuPaysDuPereNoel
 
     // ============= CLASSE LETTRE =============
 
+       
+        /// Lettre envoyée par un enfant : contient ses infos et détermine le cadeau/durée à produire.
+    
         public class Lettre
     {
         public string NomEnfant { get; set; }
@@ -88,6 +91,9 @@ namespace AuPaysDuPereNoel
 
     // ============= CLASSE LUTIN =============
 
+
+    /// Lutin chargé de fabriquer des jouets en traitant les lettres qui lui sont assignées.
+
     public class Lutin
     {
         public int Id { get; set; }
@@ -132,6 +138,9 @@ namespace AuPaysDuPereNoel
 
     // ============= CLASSE NAIN =============
 
+        /// <summary>
+        /// Nain responsable de l'emballage des cadeaux déjà construits par les lutins.
+        /// </summary>
         public class Nain
     {
         private const int DureeEmballageHeures = 2; // durée fixe pour emballer un cadeau
@@ -240,6 +249,8 @@ namespace AuPaysDuPereNoel
     }
     // ============= CLASSE ELFE =============
 
+    /// Elfe qui gère un traîneau par continent et transporte les cadeaux prêts vers les entrepôts.
+
     public class Elfe
     {
         public int Id { get; set; }
@@ -271,6 +282,9 @@ namespace AuPaysDuPereNoel
     }
 
     // ============= CLASSE ENTREPOT =============
+
+ 
+    /// Entrepôt par continent où sont stockés les cadeaux débarqués des traîneaux.
 
     public class Entrepot
     {
@@ -436,6 +450,9 @@ namespace AuPaysDuPereNoel
             }
         }
 
+   
+        /// Exécute une heure de simulation : arrivée de lettres, travail du personnel, voyages, coûts.
+
         public void AvancerUneHeure()
         {
             // Arrivée des lettres au bureau
@@ -499,6 +516,15 @@ namespace AuPaysDuPereNoel
                     {
                         Lettre lettreTraitee = fileContinent.Dequeue();
                         elfe.RecevoirLettre(lettreTraitee);
+                    }
+
+                    // Si le traîneau contient des cadeaux mais qu'il n'y a plus rien à charger,
+                    // on l'envoie en livraison même s'il n'est pas plein.
+                    if (!elfe.Traineau.EnVoyage &&
+                        elfe.Traineau.Lettres.Count > 0 &&
+                        fileContinent.Count == 0)
+                    {
+                        elfe.Traineau.PartirEnVoyage();
                     }
                 }
                 List<Lettre> lettresLivrees = elfe.Traineau.AvancerVoyage();
@@ -594,6 +620,9 @@ namespace AuPaysDuPereNoel
             return true;
         }
 
+
+        /// Fait défiler les heures restantes de la journée actuelle en répétant AvancerUneHeure.
+ 
         public void AvancerJusquaJourSuivant()
         {
             int heuresAAjouter = 12 - (HeureActuelle % 12);
@@ -617,17 +646,28 @@ namespace AuPaysDuPereNoel
             }
         }
 
+    
+        /// Ajuste le nombre de lutins actifs (travail ou attente) en respectant le délai de 12 heures.
+
         public void ModifierNombreLutins(int nouveauNombre)
         {
+            // Nombre total de lutins disponibles dans la liste
             int total = Lutins.Count;
+
+            // Vérifie que le nouveau nombre demandé est cohérent
             if (nouveauNombre < 0 || nouveauNombre > total)
             {
                 Console.WriteLine("Nombre de lutins invalide.");
                 return;
             }
 
+            // Délai minimal entre deux modifications
             const int delai = 12;
+
+            // Temps écoulé depuis la dernière modification
             int heuresDepuis = HeureActuelle - DerniereModificationLutins;
+
+            // On bloque si le délai n’est pas écoulé
             if (heuresDepuis < delai)
             {
                 int heurePossible = delai - heuresDepuis;
@@ -635,26 +675,35 @@ namespace AuPaysDuPereNoel
                 return;
             }
 
+            // Nombre actuel de lutins actifs (pas en repos)
             int actifs = Lutins.Count(l => l.Statut != StatutEmploye.EnRepos);
+
+            // Si rien ne change, on ne fait rien
             if (nouveauNombre == actifs)
             {
-                Console.WriteLine(" Aucun changement nécessaire.");
+                Console.WriteLine("Aucun changement nécessaire.");
                 return;
             }
 
+            // --- Réduction du nombre de lutins actifs ---
             if (nouveauNombre < actifs)
             {
                 int aMettreEnRepos = actifs - nouveauNombre;
-                List<Lutin> disponibles = Lutins.Where(l => l.Statut == StatutEmploye.EnAttente)
-                                                .Take(aMettreEnRepos)
-                                                .ToList();
 
+                // On récupère les lutins disponibles pour être mis en repos
+                List<Lutin> disponibles = Lutins
+                    .Where(l => l.Statut == StatutEmploye.EnAttente)
+                    .Take(aMettreEnRepos)
+                    .ToList();
+
+                // Si on n’en a pas assez, on bloque
                 if (disponibles.Count < aMettreEnRepos)
                 {
                     Console.WriteLine("Impossible de mettre autant de lutins en repos (certains travaillent encore).");
                     return;
                 }
 
+                // Mise en repos
                 foreach (Lutin lutin in disponibles)
                 {
                     lutin.Statut = StatutEmploye.EnRepos;
@@ -664,19 +713,25 @@ namespace AuPaysDuPereNoel
 
                 Console.WriteLine($"{aMettreEnRepos} lutin(s) mis en repos.");
             }
+            // --- Augmentation du nombre de lutins actifs ---
             else
             {
                 int aReactiv = nouveauNombre - actifs;
-                List<Lutin> repos = Lutins.Where(l => l.Statut == StatutEmploye.EnRepos)
-                                          .Take(aReactiv)
-                                          .ToList();
 
+                // On récupère des lutins capables de revenir travailler
+                List<Lutin> repos = Lutins
+                    .Where(l => l.Statut == StatutEmploye.EnRepos)
+                    .Take(aReactiv)
+                    .ToList();
+
+                // Pas assez de lutins disponibles
                 if (repos.Count < aReactiv)
                 {
-                    Console.WriteLine(" Aucun lutin supplémentaire n'est disponible pour reprendre le travail.");
+                    Console.WriteLine("Aucun lutin supplémentaire n'est disponible pour reprendre le travail.");
                     return;
                 }
 
+                // Réactivation
                 foreach (Lutin lutin in repos)
                 {
                     lutin.Statut = StatutEmploye.EnAttente;
@@ -687,81 +742,111 @@ namespace AuPaysDuPereNoel
                 Console.WriteLine($"{aReactiv} lutin(s) réaffecté(s) au travail.");
             }
 
+            // Mise à jour de l’heure de la dernière modification
             DerniereModificationLutins = HeureActuelle;
         }
 
-        public void ModifierNombreNains(int nouveauNombre)
+
+ 
+        /// Ajuste le nombre de nains actifs avec un délai minimum de 24 heures entre deux actions.
+
+public void ModifierNombreNains(int nouveauNombre)
+{
+    // Nombre total de nains présents dans la liste
+    int total = Nains.Count;
+
+    // Vérifie que la demande est cohérente (pas négative, pas supérieure au total)
+    if (nouveauNombre < 0 || nouveauNombre > total)
+    {
+        Console.WriteLine("Nombre de nains invalide.");
+        return;
+    }
+
+    // Durée minimale entre deux modifications
+    const int delai = 24;
+
+    // Temps écoulé depuis la dernière modification
+    int heuresDepuis = HeureActuelle - DerniereModificationNains;
+
+    // Impossible de modifier si le délai n'est pas respecté
+    if (heuresDepuis < delai)
+    {
+        int heurePossible = delai - heuresDepuis;
+        Console.WriteLine($"Modification impossible avant {heurePossible} heure(s).");
+        return;
+    }
+
+    // Nombre de nains actuellement actifs (pas en repos)
+    int actifs = Nains.Count(n => n.Statut != StatutEmploye.EnRepos);
+
+    // Si le nombre demandé est identique, rien à faire
+    if (nouveauNombre == actifs)
+    {
+        Console.WriteLine("Aucun changement nécessaire.");
+        return;
+    }
+
+    // --- Réduire le nombre de nains actifs ---
+    if (nouveauNombre < actifs)
+    {
+        int aMettreEnRepos = actifs - nouveauNombre;
+
+        // On sélectionne des nains disponibles pour être mis en repos
+        List<Nain> disponibles = Nains
+            .Where(n => n.Statut == StatutEmploye.EnAttente)
+            .Take(aMettreEnRepos)
+            .ToList();
+
+        // Pas assez de nains "libres" pour réduire autant
+        if (disponibles.Count < aMettreEnRepos)
         {
-            int total = Nains.Count;
-            if (nouveauNombre < 0 || nouveauNombre > total)
-            {
-                Console.WriteLine(" Nombre de nains invalide.");
-                return;
-            }
-
-            const int delai = 24;
-            int heuresDepuis = HeureActuelle - DerniereModificationNains;
-            if (heuresDepuis < delai)
-            {
-                int heurePossible = delai - heuresDepuis;
-                Console.WriteLine($" Modification impossible avant {heurePossible} heure(s).");
-                return;
-            }
-
-            int actifs = Nains.Count(n => n.Statut != StatutEmploye.EnRepos);
-            if (nouveauNombre == actifs)
-            {
-                Console.WriteLine(" Aucun changement nécessaire.");
-                return;
-            }
-
-            if (nouveauNombre < actifs)
-            {
-                int aMettreEnRepos = actifs - nouveauNombre;
-                List<Nain> disponibles = Nains.Where(n => n.Statut == StatutEmploye.EnAttente)
-                                              .Take(aMettreEnRepos)
-                                              .ToList();
-
-                if (disponibles.Count < aMettreEnRepos)
-                {
-                    Console.WriteLine(" Impossible de mettre autant de nains en repos (certains emballent encore).");
-                    return;
-                }
-
-                foreach (Nain nain in disponibles)
-                {
-                    nain.Statut = StatutEmploye.EnRepos;
-                    nain.LettreEnCours = null;
-                    nain.HeuresRestantes = 0;
-                }
-
-                Console.WriteLine($"{aMettreEnRepos} nain(s) mis en repos.");
-            }
-            else
-            {
-                int aReactiv = nouveauNombre - actifs;
-                List<Nain> repos = Nains.Where(n => n.Statut == StatutEmploye.EnRepos)
-                                        .Take(aReactiv)
-                                        .ToList();
-
-                if (repos.Count < aReactiv)
-                {
-                    Console.WriteLine(" Aucun nain supplémentaire n'est disponible pour reprendre le travail.");
-                    return;
-                }
-
-                foreach (Nain nain in repos)
-                {
-                    nain.Statut = StatutEmploye.EnAttente;
-                    nain.LettreEnCours = null;
-                    nain.HeuresRestantes = 0;
-                }
-
-                Console.WriteLine($"{aReactiv} nain(s) réaffecté(s) au travail.");
-            }
-
-            DerniereModificationNains = HeureActuelle;
+            Console.WriteLine("Impossible de mettre autant de nains en repos (certains emballent encore).");
+            return;
         }
+
+        // Passage au statut repos
+        foreach (Nain nain in disponibles)
+        {
+            nain.Statut = StatutEmploye.EnRepos;
+            nain.LettreEnCours = null;
+            nain.HeuresRestantes = 0;
+        }
+
+        Console.WriteLine($"{aMettreEnRepos} nain(s) mis en repos.");
+    }
+    // --- Augmenter le nombre de nains actifs ---
+    else
+    {
+        int aReactiv = nouveauNombre - actifs;
+
+        // On récupère des nains en repos pour les réactiver
+        List<Nain> repos = Nains
+            .Where(n => n.Statut == StatutEmploye.EnRepos)
+            .Take(aReactiv)
+            .ToList();
+
+        // Pas assez de nains disponibles pour reprendre le travail
+        if (repos.Count < aReactiv)
+        {
+            Console.WriteLine("Aucun nain supplémentaire n'est disponible pour reprendre le travail.");
+            return;
+        }
+
+        // Réactivation
+        foreach (Nain nain in repos)
+        {
+            nain.Statut = StatutEmploye.EnAttente;
+            nain.LettreEnCours = null;
+            nain.HeuresRestantes = 0;
+        }
+
+        Console.WriteLine($"{aReactiv} nain(s) réaffecté(s) au travail.");
+    }
+
+    // Met à jour le moment de la dernière modification
+    DerniereModificationNains = HeureActuelle;
+}
+
 
         public void AfficherIndicateurs()
         {
