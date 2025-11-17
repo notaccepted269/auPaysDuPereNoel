@@ -438,96 +438,119 @@ namespace AuPaysDuPereNoel
 
         public void AvancerUneHeure()
         {
-            // 1) Le Père Noël lit quelques lettres
-            for (int i = 0; i < NbLettresParHeure; i++)
+            // Arrivée des lettres au bureau
+            if (BureauPereNoel.Count > 0)
             {
-                if (BureauPereNoel.Count == 0)
-                    break;
+                int nbLettreQuiArrivent = random.Next(0, NbLettresParHeure + 1);
 
-                Lettre lettre = BureauPereNoel.Pop();
-                FileAttenteFabrication.Enqueue(lettre);
+                for (int i = 0; i < nbLettreQuiArrivent; i++)
+                {
+                    Lettre lettreATraiter = BureauPereNoel.Pop();
+                    FileAttenteFabrication.Enqueue(lettreATraiter);
+                }
             }
 
-            // 2) Affecter les lutins disponibles
+            // Travail des lutins
             foreach (Lutin lutin in Lutins)
             {
                 if (lutin.Statut == StatutEmploye.EnAttente && FileAttenteFabrication.Count > 0)
                 {
-                    Lettre lettre = FileAttenteFabrication.Dequeue();
-                    lutin.CommencerFabrication(lettre);
+                    Lettre lettreATraiter = FileAttenteFabrication.Dequeue();
+                    lutin.CommencerFabrication(lettreATraiter);
                 }
-            }
 
-            // 3) Les lutins travaillent
-            foreach (Lutin lutin in Lutins)
-            {
-                Lettre lettreTerminee = lutin.Travailler();
-                if (lettreTerminee != null)
+                if (lutin.Statut == StatutEmploye.EnTravail)
                 {
-                    FileAttenteEmballage.Enqueue(lettreTerminee);
+                    Lettre lettreTraitee = lutin.Travailler();
+                    if (lettreTraitee != null)
+                    {
+                        FileAttenteEmballage.Enqueue(lettreTraitee);
+                    }
                 }
             }
 
-            // 4) Les nains prennent les cadeaux à emballer
+            // Travail des nains
+
             foreach (Nain nain in Nains)
             {
                 if (nain.Statut == StatutEmploye.EnAttente && FileAttenteEmballage.Count > 0)
                 {
-                    Lettre lettre = FileAttenteEmballage.Dequeue();
-                    nain.CommencerEmballage(lettre);
+                    Lettre lettreATraiter = FileAttenteEmballage.Dequeue();
+                    nain.CommencerEmballage(lettreATraiter);
                 }
-            }
 
-            // 5) Les nains emballent
-            foreach (Nain nain in Nains)
-            {
-                Lettre cadeauPret = nain.Travailler();
-                if (cadeauPret != null)
+                if (nain.Statut == StatutEmploye.EnTravail)
                 {
-                    FilesAttenteContinents[(int)cadeauPret.Continent].Enqueue(cadeauPret);
+                    Lettre lettreTraitee = nain.Travailler();
+                    if (lettreTraitee != null)
+                    {
+                        FilesAttenteContinents[(int)lettreTraitee.Continent].Enqueue(lettreTraitee);
+                    }
                 }
             }
 
-            // 6) Les elfes chargent les traîneaux
+            // Travail des elfes
             foreach (Elfe elfe in Elfes)
             {
-                Queue<Lettre> fileContinent = FilesAttenteContinents[(int)elfe.Continent];
-                while (fileContinent.Count > 0 && elfe.PeutRecevoirLettre())
+                if (!elfe.Traineau.EnVoyage)
                 {
-                    Lettre lettre = fileContinent.Dequeue();
-                    elfe.RecevoirLettre(lettre);
+                    Queue<Lettre> fileContinent = FilesAttenteContinents[(int)elfe.Continent];
+                    while (fileContinent.Count > 0 && elfe.PeutRecevoirLettre())
+                    {
+                        Lettre lettreTraitee = fileContinent.Dequeue();
+                        elfe.RecevoirLettre(lettreTraitee);
+                    }
+                }
+                List<Lettre> lettresLivrees = elfe.Traineau.AvancerVoyage();
+                if (lettresLivrees != null && lettresLivrees.Count > 0)
+                {
+                    Entrepots[(int)elfe.Continent].AjouterLettres(lettresLivrees);
+                }
+            }
+            // Salaires
+            double salaireHeure = 0.0;
+
+            //Salaire lutins
+            foreach(Lutin lutin in Lutins)
+            {
+                if (lutin.Statut == StatutEmploye.EnTravail)
+                {
+                    salaireHeure += 1.5;
+                } else if (lutin.Statut == StatutEmploye.EnAttente)
+                {
+                    salaireHeure += 1.0;
                 }
             }
 
-            // 7) Les traîneaux avancent
-            foreach (Elfe elfe in Elfes)
-            {
-                List<Lettre> livraisons = elfe.Traineau.AvancerVoyage();
-                if (livraisons != null && livraisons.Count > 0)
-                {
-                    Entrepots[(int)elfe.Continent].AjouterLettres(livraisons);
-                }
-            }
-
-            // 8) Coût horaire simple
-            double coutHeure = 0;
-            foreach (Lutin lutin in Lutins)
-            {
-                if (lutin.Statut != StatutEmploye.EnRepos)
-                    coutHeure += 5;
-            }
+            //Salaire nains
             foreach (Nain nain in Nains)
             {
-                if (nain.Statut != StatutEmploye.EnRepos)
-                    coutHeure += 4;
+                if (nain.Statut == StatutEmploye.EnTravail)
+                {
+                    salaireHeure += 1.0;
+                } else if (nain.Statut == StatutEmploye.EnAttente)
+                {
+                    salaireHeure += 0.5;
+                }
             }
-            coutHeure += Elfes.Count * 2;
 
-            CoutsParHeure.Add(coutHeure);
-            CoutTotal += coutHeure;
-
-            // 9) Temps
+            //Salaire elfes
+            foreach (Elfe elfe in Elfes)
+            {
+                if (elfe.Traineau.EnVoyage)
+                {
+                    salaireHeure += 2.0;
+                }
+                else if (elfe.Traineau.Lettres.Count > 0)
+                {
+                    salaireHeure += 1.5;
+                }
+            }
+            // Mettre à jour les valeurs
+            CoutTotal += salaireHeure;
+            CoutsParHeure.Add(salaireHeure);
             HeureActuelle++;
+            // Journée de 12h
             if (HeureActuelle % 12 == 0)
             {
                 JourActuel++;
