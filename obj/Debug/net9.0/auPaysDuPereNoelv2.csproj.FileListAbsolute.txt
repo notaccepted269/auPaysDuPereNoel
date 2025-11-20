@@ -1,0 +1,14 @@
+/home/rmoham/Bureau/auPaysDuPereNoelv2/bin/Debug/net9.0/auPaysDuPereNoelv2
+/home/rmoham/Bureau/auPaysDuPereNoelv2/bin/Debug/net9.0/auPaysDuPereNoelv2.deps.json
+/home/rmoham/Bureau/auPaysDuPereNoelv2/bin/Debug/net9.0/auPaysDuPereNoelv2.runtimeconfig.json
+/home/rmoham/Bureau/auPaysDuPereNoelv2/bin/Debug/net9.0/auPaysDuPereNoelv2.dll
+/home/rmoham/Bureau/auPaysDuPereNoelv2/bin/Debug/net9.0/auPaysDuPereNoelv2.pdb
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/auPaysDuPereNoelv2.GeneratedMSBuildEditorConfig.editorconfig
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/auPaysDuPereNoelv2.AssemblyInfoInputs.cache
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/auPaysDuPereNoelv2.AssemblyInfo.cs
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/auPaysDuPereNoelv2.csproj.CoreCompileInputs.cache
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/auPaysDuPereNoelv2.dll
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/refint/auPaysDuPereNoelv2.dll
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/auPaysDuPereNoelv2.pdb
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/auPaysDuPereNoelv2.genruntimeconfig.cache
+/home/rmoham/Bureau/auPaysDuPereNoelv2/obj/Debug/net9.0/ref/auPaysDuPereNoelv2.dll

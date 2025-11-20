@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "NvKCVwA+RhY=",
+  "success": true,
+  "projectFilePath": "/home/rmoham/Bureau/auPaysDuPereNoelv2/auPaysDuPereNoelv2.csproj",
+  "expectedPackageFiles": [
+    "/home/rmoham/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
