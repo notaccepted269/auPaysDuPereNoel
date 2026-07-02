@@ -4,6 +4,11 @@
 
 Ce projet propose une simulation textuelle de la logistique du Père Noël. Les lettres d’enfants sont dépilées, les lutins fabriquent les jouets, les nains les emballent, les elfes chargent les traîneaux et des entrepôts reçoivent les livraisons par continent. L’objectif est d’équilibrer la charge de travail et les coûts horaires jusqu’à ce que toutes les lettres soient traitées.
 
+Ce projet a été réalisé dans le cadre de notre formation et est publié publiquement avec l'aimable autorisation de notre équipe enseignante. Le code source est le fruit d'un travail collaboratif réparti de la manière suivante :
+
+- **Architecture de base et code initial :** Fournis par notre professeur, Eric Andres, professeur à l'université de Poitiers.
+- **Implémentation, développement et conception :** Réalisés en binôme par Rayane MOHAMED et OGE Liam.
+
 ## Prérequis
 
 - [.NET SDK 9.0](https://dotnet.microsoft.com/download) ou version supérieure compatible
