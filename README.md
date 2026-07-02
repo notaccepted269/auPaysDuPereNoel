@@ -6,7 +6,7 @@ Ce projet propose une simulation textuelle de la logistique du Père Noël. Les 
 
 Ce projet a été réalisé dans le cadre de notre formation et est publié publiquement avec l'aimable autorisation de notre équipe enseignante. Le code source est le fruit d'un travail collaboratif réparti de la manière suivante :
 
-- **Architecture de base et code initial :** Fournis par notre professeur, Eric Andres, professeur à l'université de Poitiers.
+- **Architecture de base et code initial :** Fournis par notre professeur, Eric Andres.
 - **Implémentation, développement et conception :** Réalisés en binôme par Rayane MOHAMED et OGE Liam.
 
 ## Prérequis
